@@ -9,7 +9,9 @@ import java.util.Optional;
 public interface MealKitRepository extends CrudRepository<MealKit, String> {
 
     List<MealKit> findAll();
-    List<MealKit> findMealKitListByMealKitClassification(String mealKitClassification);
     Optional<MealKit> findMealKitByMealKitId(String mealKitId);
+    List<MealKit> findMealKitListByMealKitClassification(String mealKitClassification);
+    List<MealKit> findMealKitListByMealKitFoodClassification(String mealKitFoodClassification);
+
 
 }
