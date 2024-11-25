@@ -1,7 +1,7 @@
 package com.example.dx_kiosk.unit_test.mealkit.repository;
 
-import com.example.dx_kiosk.mealkit.domain.MealKit;
-import com.example.dx_kiosk.mealkit.repository.MealKitRepository;
+import com.example.dx_kiosk.entity.mealkit.domain.MealKit;
+import com.example.dx_kiosk.entity.mealkit.repository.MealKitRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
