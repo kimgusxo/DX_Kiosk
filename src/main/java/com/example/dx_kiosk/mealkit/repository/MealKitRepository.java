@@ -11,7 +11,5 @@ public interface MealKitRepository extends CrudRepository<MealKit, String> {
     List<MealKit> findAll();
     Optional<MealKit> findMealKitByMealKitId(String mealKitId);
     List<MealKit> findMealKitListByMealKitClassification(String mealKitClassification);
-    List<MealKit> findMealKitListByMealKitFoodClassification(String mealKitFoodClassification);
-
 
 }
