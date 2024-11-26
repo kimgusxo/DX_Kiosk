@@ -22,4 +22,3 @@ public class DataInputUtils {
     public void loadCsvToRedis(String filePath, String keyPrefix) {
     }
 }
-
