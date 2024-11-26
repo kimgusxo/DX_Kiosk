@@ -3,7 +3,7 @@ package com.example.dx_kiosk.entity.mealkit.domain.dto;
 import com.example.dx_kiosk.entity.mealkit.domain.MealKit;
 
 public record MealKitDTO(
-        String mealKitId,
+        Long mealKitId,
         String mealKitName,
         Integer mealKitPrice,
         String mealKitClassification,

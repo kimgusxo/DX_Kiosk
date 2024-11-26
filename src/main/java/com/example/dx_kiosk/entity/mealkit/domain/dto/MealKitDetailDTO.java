@@ -1,8 +1,8 @@
 package com.example.dx_kiosk.entity.mealkit.domain.dto;
 
 public record MealKitDetailDTO(
-        String mealKitId,
-        String storeId,
+        Long mealKitId,
+        Long storeId,
         String mealKitName,
         Integer mealKitPrice,
         Integer mealKitCount,

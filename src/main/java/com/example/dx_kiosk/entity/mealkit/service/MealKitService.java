@@ -39,9 +39,9 @@ public class MealKitService {
     }
 
     @Transactional
-    public MealKitDetailDTO getMealKitByMealKitId(String mealKitId) {
+    public MealKitDetailDTO getMealKitByMealKitId(Long mealKitId) {
         Optional<MealKit> result =
-                mealKitRepository.findById(mealKitId);
+                mealKitRepository.findMealKitByMealKitId(mealKitId);
 
         if (result.isEmpty()) {
             throw new ObjectEmptyException();

@@ -3,7 +3,7 @@ package com.example.dx_kiosk.entity.laundry_supplies.domain.dto;
 import com.example.dx_kiosk.entity.laundry_supplies.domain.LaundrySupplies;
 
 public record LaundrySuppliesDTO(
-        String laundrySuppliesId,
+        Long laundrySuppliesId,
         String laundrySuppliesName,
         Integer laundrySuppliesPrice,
         String laundrySuppliesClassification,

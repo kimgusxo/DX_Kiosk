@@ -36,9 +36,9 @@ public class LaundryTicketService {
         return resultsDTO;
     }
 
-    public LaundryTicketDetailDTO getLaundryTicketByLaundryTicketId(String laundryTicketId) {
+    public LaundryTicketDetailDTO getLaundryTicketByLaundryTicketId(Long laundryTicketId) {
         Optional<LaundryTicket> result =
-                laundryTicketRepository.findById(laundryTicketId);
+                laundryTicketRepository.findLaundryTicketByLaundryTicketId(laundryTicketId);
 
         if(result.isEmpty()) {
             throw new ObjectEmptyException();

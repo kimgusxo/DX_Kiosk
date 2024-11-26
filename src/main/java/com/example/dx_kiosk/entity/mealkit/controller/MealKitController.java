@@ -29,7 +29,7 @@ public class MealKitController {
 
     @GetMapping("/get/one/{mealKitId}")
     @Operation(summary = "Get MealKitDetailDTO By MealKitId", description = "선택한 밀키트 가져오기")
-    public ResponseEntity<MealKitDetailDTO> getMealKitByMealKitId(@PathVariable String mealKitId) {
+    public ResponseEntity<MealKitDetailDTO> getMealKitByMealKitId(@PathVariable Long mealKitId) {
         log.info("getMealKitByMealKitId : mealKitId = {}", mealKitId);
         return new ResponseEntity<>(mealKitService.getMealKitByMealKitId(mealKitId), HttpStatus.OK);
     }

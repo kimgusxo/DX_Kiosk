@@ -13,7 +13,7 @@ import org.springframework.data.redis.core.RedisHash;
 public class LaundryTicket {
 
     @Id
-    private String laundryTicketId;
+    private Long laundryTicketId;
 
     private String laundryTicketClassification;
     private String laundryTicketPrice;

@@ -13,7 +13,7 @@ import org.springframework.data.redis.core.RedisHash;
 public class MealKit {
 
     @Id
-    private String mealKitId;
+    private Long mealKitId;
 
     private String mealKitName;
     private Integer mealKitPrice;

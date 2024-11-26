@@ -32,7 +32,7 @@ public class LaundryTicketController {
 
     @GetMapping("/get/one/{laundryTicketId}")
     @Operation(summary = "Get LaundryTicketDetail By LaundryTicketId", description = "선택한 세탁권 가져오기")
-    public ResponseEntity<LaundryTicketDetailDTO> getLaundryTicketByLaundryTicketId(@PathVariable("laundryTicketId") String laundryTicketId) {
+    public ResponseEntity<LaundryTicketDetailDTO> getLaundryTicketByLaundryTicketId(@PathVariable("laundryTicketId") Long laundryTicketId) {
         log.info("getLaundryTicketByLaundryTicketId : laundryTicketId = {}", laundryTicketId);
         return new ResponseEntity<>(laundryTicketService.getLaundryTicketByLaundryTicketId(laundryTicketId), HttpStatus.OK);
     }

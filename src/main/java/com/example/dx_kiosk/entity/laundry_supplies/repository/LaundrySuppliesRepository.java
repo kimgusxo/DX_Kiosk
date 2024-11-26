@@ -9,9 +9,9 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface LaundrySuppliesRepository extends CrudRepository<LaundrySupplies, String>, CustomLaundrySuppliesRepository {
+public interface LaundrySuppliesRepository extends CrudRepository<LaundrySupplies, Long>, CustomLaundrySuppliesRepository {
 
     List<LaundrySupplies> findAll();
-    Optional<LaundrySupplies> findLaundrySuppliesByLaundrySuppliesId(String laundrySuppliesId);
+    Optional<LaundrySupplies> findLaundrySuppliesByLaundrySuppliesId(Long laundrySuppliesId);
 
 }

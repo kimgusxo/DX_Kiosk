@@ -39,7 +39,7 @@ public class LaundrySuppliesService {
     }
 
     @Transactional
-    public LaundrySuppliesDetailDTO getLaundrySuppliesByLaundrySuppliesId(String laundrySuppliesId) {
+    public LaundrySuppliesDetailDTO getLaundrySuppliesByLaundrySuppliesId(Long laundrySuppliesId) {
         Optional<LaundrySupplies> result =
                 laundrySuppliesRepository.findLaundrySuppliesByLaundrySuppliesId(laundrySuppliesId);
 
