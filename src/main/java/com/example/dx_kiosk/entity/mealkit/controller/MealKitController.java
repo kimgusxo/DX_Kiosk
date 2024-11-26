@@ -29,14 +29,14 @@ public class MealKitController {
     @GetMapping("/get/one/{mealKitId}")
     @Operation(summary = "Get MealKit By MealKitId", description = "선택한 밀키트 가져오기")
     public ResponseEntity<MealKitDTO> getMealKitByMealKitId(@PathVariable String mealKitId) {
-        log.info("getMealKitByMealKitId : mealKitId : " + mealKitId);
+        log.info("getMealKitByMealKitId : mealKitId = {}", mealKitId);
         return new ResponseEntity<>(mealKitService.getMealKitByMealKitId(mealKitId), HttpStatus.OK);
     }
 
     @GetMapping("/get/list/{mealKitClassification}")
     @Operation(summary = "Get MealKitList By MealKitClassification", description = "분류 별 밀키트 리스트 가져오기")
     public ResponseEntity<List<MealKitDTO>> getMealKitListByMealKitClassification(@PathVariable String mealKitClassification) {
-        log.info("getMealKitListByMealKitClassification : mealKitClassification : " + mealKitClassification);
+        log.info("getMealKitListByMealKitClassification : mealKitClassification = {}", mealKitClassification);
         return new ResponseEntity<>(mealKitService.getMealKitListByMealKitClassification(mealKitClassification), HttpStatus.OK);
     }
 

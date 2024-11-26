@@ -17,7 +17,6 @@ public class LaundrySupplies {
 
     private String laundrySuppliesName;
     private Integer laundrySuppliesPrice;
-    private Integer laundrySuppliesCount;
     private String laundrySuppliesClassification;
     private String laundrySuppliesCompanyName;
     private String laundrySuppliesDescription;

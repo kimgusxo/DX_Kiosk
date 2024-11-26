@@ -17,7 +17,6 @@ public class MealKit {
 
     private String mealKitName;
     private Integer mealKitPrice;
-    private Integer mealKitCount;
     private String mealKitClassification;
     private String mealKitFoodClassification;
     private String mealKitCompanyName;
