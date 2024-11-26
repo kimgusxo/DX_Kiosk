@@ -1,6 +1,7 @@
 package com.example.dx_kiosk.entity.laundry_supplies.controller;
 
 import com.example.dx_kiosk.entity.laundry_supplies.domain.dto.LaundrySuppliesDTO;
+import com.example.dx_kiosk.entity.laundry_supplies.domain.dto.LaundrySuppliesDetailDTO;
 import com.example.dx_kiosk.entity.laundry_supplies.service.LaundrySuppliesService;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
@@ -30,8 +31,8 @@ public class LaundrySuppliesController {
     }
 
     @GetMapping("/get/one/{laundrySuppliesId}")
-    @Operation(summary = "Get LaundrySupplies By LaundrySuppliesId", description = "선택한 세탁용품 가져오기")
-    public ResponseEntity<LaundrySuppliesDTO> getLaundrySuppliesByLaundrySuppliesId(@PathVariable String laundrySuppliesId) {
+    @Operation(summary = "Get LaundrySuppliesDetail By LaundrySuppliesId", description = "선택한 세탁용품 가져오기")
+    public ResponseEntity<LaundrySuppliesDetailDTO> getLaundrySuppliesByLaundrySuppliesId(@PathVariable String laundrySuppliesId) {
         log.info("getLaundrySuppliesByLaundrySuppliesId : laundrySuppliesId = {}", laundrySuppliesId);
         return new ResponseEntity<>(laundrySuppliesService.getLaundrySuppliesByLaundrySuppliesId(laundrySuppliesId), HttpStatus.OK);
     }

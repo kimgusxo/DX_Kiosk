@@ -2,6 +2,7 @@ package com.example.dx_kiosk.entity.mealkit.service;
 
 import com.example.dx_kiosk.entity.mealkit.domain.MealKit;
 import com.example.dx_kiosk.entity.mealkit.domain.dto.MealKitDTO;
+import com.example.dx_kiosk.entity.mealkit.domain.dto.MealKitDetailDTO;
 import com.example.dx_kiosk.entity.mealkit.repository.MealKitRepository;
 import com.example.dx_kiosk.exception.ListEmptyException;
 import com.example.dx_kiosk.exception.ObjectEmptyException;
@@ -38,7 +39,7 @@ public class MealKitService {
     }
 
     @Transactional
-    public MealKitDTO getMealKitByMealKitId(String mealKitId) {
+    public MealKitDetailDTO getMealKitByMealKitId(String mealKitId) {
         Optional<MealKit> result =
                 mealKitRepository.findById(mealKitId);
 
@@ -46,7 +47,9 @@ public class MealKitService {
             throw new ObjectEmptyException();
         }
 
-        return MealKitDTO.from(result.get());
+        // 파이어베이스에서 storeId와 count 채워서 상세페이지 보여주기
+
+        return null;
     }
 
     @Transactional

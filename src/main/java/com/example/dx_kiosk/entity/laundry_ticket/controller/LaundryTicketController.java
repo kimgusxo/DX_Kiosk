@@ -1,6 +1,7 @@
 package com.example.dx_kiosk.entity.laundry_ticket.controller;
 
 import com.example.dx_kiosk.entity.laundry_ticket.domain.dto.LaundryTicketDTO;
+import com.example.dx_kiosk.entity.laundry_ticket.domain.dto.LaundryTicketDetailDTO;
 import com.example.dx_kiosk.entity.laundry_ticket.service.LaundryTicketService;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
@@ -30,8 +31,8 @@ public class LaundryTicketController {
     }
 
     @GetMapping("/get/one/{laundryTicketId}")
-    @Operation(summary = "Get LaundryTicket By LaundryTicketId", description = "선택한 세탁권 가져오기")
-    public ResponseEntity<LaundryTicketDTO> getLaundryTicketByLaundryTicketId(@PathVariable("laundryTicketId") String laundryTicketId) {
+    @Operation(summary = "Get LaundryTicketDetail By LaundryTicketId", description = "선택한 세탁권 가져오기")
+    public ResponseEntity<LaundryTicketDetailDTO> getLaundryTicketByLaundryTicketId(@PathVariable("laundryTicketId") String laundryTicketId) {
         log.info("getLaundryTicketByLaundryTicketId : laundryTicketId = {}", laundryTicketId);
         return new ResponseEntity<>(laundryTicketService.getLaundryTicketByLaundryTicketId(laundryTicketId), HttpStatus.OK);
     }

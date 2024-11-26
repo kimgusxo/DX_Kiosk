@@ -1,6 +1,7 @@
 package com.example.dx_kiosk.entity.mealkit.controller;
 
 import com.example.dx_kiosk.entity.mealkit.domain.dto.MealKitDTO;
+import com.example.dx_kiosk.entity.mealkit.domain.dto.MealKitDetailDTO;
 import com.example.dx_kiosk.entity.mealkit.service.MealKitService;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
@@ -27,8 +28,8 @@ public class MealKitController {
     }
 
     @GetMapping("/get/one/{mealKitId}")
-    @Operation(summary = "Get MealKit By MealKitId", description = "선택한 밀키트 가져오기")
-    public ResponseEntity<MealKitDTO> getMealKitByMealKitId(@PathVariable String mealKitId) {
+    @Operation(summary = "Get MealKitDetailDTO By MealKitId", description = "선택한 밀키트 가져오기")
+    public ResponseEntity<MealKitDetailDTO> getMealKitByMealKitId(@PathVariable String mealKitId) {
         log.info("getMealKitByMealKitId : mealKitId = {}", mealKitId);
         return new ResponseEntity<>(mealKitService.getMealKitByMealKitId(mealKitId), HttpStatus.OK);
     }

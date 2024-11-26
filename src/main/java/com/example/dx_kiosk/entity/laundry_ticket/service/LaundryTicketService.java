@@ -2,6 +2,7 @@ package com.example.dx_kiosk.entity.laundry_ticket.service;
 
 import com.example.dx_kiosk.entity.laundry_ticket.domain.LaundryTicket;
 import com.example.dx_kiosk.entity.laundry_ticket.domain.dto.LaundryTicketDTO;
+import com.example.dx_kiosk.entity.laundry_ticket.domain.dto.LaundryTicketDetailDTO;
 import com.example.dx_kiosk.entity.laundry_ticket.repository.LaundryTicketRepository;
 import com.example.dx_kiosk.exception.ListEmptyException;
 import com.example.dx_kiosk.exception.ObjectEmptyException;
@@ -35,7 +36,7 @@ public class LaundryTicketService {
         return resultsDTO;
     }
 
-    public LaundryTicketDTO getLaundryTicketByLaundryTicketId(String laundryTicketId) {
+    public LaundryTicketDetailDTO getLaundryTicketByLaundryTicketId(String laundryTicketId) {
         Optional<LaundryTicket> result =
                 laundryTicketRepository.findById(laundryTicketId);
 
@@ -43,6 +44,8 @@ public class LaundryTicketService {
             throw new ObjectEmptyException();
         }
 
-        return LaundryTicketDTO.from(result.get());
+        // 파이어베이스에서 storeId 채워서 상세페이지 보여주기
+        
+        return null;
     }
 }

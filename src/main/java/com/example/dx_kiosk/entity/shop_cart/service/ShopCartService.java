@@ -15,21 +15,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ShopCartService {
 
-    private final MealKitRepository mealKitRepository;
-    private final LaundrySuppliesRepository laundrySuppliesRepository;
-
     @Transactional
     public Void buy(ShopCartDTO shopCart) {
-        List<MealKitDTO> mealKitDTOList = shopCart.getMealKitsDTO();
-        List<LaundrySuppliesDTO> laundrySuppliesDTOList = shopCart.getLaundrySuppliesDTO();
-
-        mealKitDTOList.forEach(mk -> {
-            mealKitRepository.decrementMealKitCount(mk.mealKitId());
-        });
-
-        laundrySuppliesDTOList.forEach(ls -> {
-            laundrySuppliesRepository.decrementLaundrySuppliesCount(ls.laundrySuppliesId());
-        });
 
         // 파이어베이스 연동 부분
 

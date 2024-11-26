@@ -2,6 +2,7 @@ package com.example.dx_kiosk.entity.laundry_supplies.service;
 
 import com.example.dx_kiosk.entity.laundry_supplies.domain.LaundrySupplies;
 import com.example.dx_kiosk.entity.laundry_supplies.domain.dto.LaundrySuppliesDTO;
+import com.example.dx_kiosk.entity.laundry_supplies.domain.dto.LaundrySuppliesDetailDTO;
 import com.example.dx_kiosk.entity.laundry_supplies.repository.LaundrySuppliesRepository;
 import com.example.dx_kiosk.exception.ListEmptyException;
 import com.example.dx_kiosk.exception.ObjectEmptyException;
@@ -38,7 +39,7 @@ public class LaundrySuppliesService {
     }
 
     @Transactional
-    public LaundrySuppliesDTO getLaundrySuppliesByLaundrySuppliesId(String laundrySuppliesId) {
+    public LaundrySuppliesDetailDTO getLaundrySuppliesByLaundrySuppliesId(String laundrySuppliesId) {
         Optional<LaundrySupplies> result =
                 laundrySuppliesRepository.findLaundrySuppliesByLaundrySuppliesId(laundrySuppliesId);
 
@@ -46,6 +47,8 @@ public class LaundrySuppliesService {
             throw new ObjectEmptyException();
         }
 
-        return LaundrySuppliesDTO.from(result.get());
+        // 파이어베이스에서 storeId와 count 채워서 상세페이지 보여주기
+
+        return null;
     }
 }
