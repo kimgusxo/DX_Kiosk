@@ -89,6 +89,8 @@ public class ShopCartService {
             // Batch 커밋
             batch.commit().get(); // 비동기 작업을 동기적으로 처리
             System.out.println("Order saved successfully with order_id: " + newOrderId);
+            
+            // 이거 커밋이 끝나면 재고 데이터 업데이트 해야함
 
         } catch (Exception e) {
             System.err.println("Error saving order: " + e.getMessage());
