@@ -8,22 +8,26 @@ import com.google.firebase.cloud.FirestoreClient;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 
 @Configuration
 public class FirestoreConfig {
 
     @Bean
     public Firestore firestore() throws IOException {
-        // Firebase 서비스 계정 키 파일 경로
-        FileInputStream serviceAccount =
-                new FileInputStream("src/main/resources/firebase-service-account.json");
+        // resources 디렉토리에서 서비스 계정 파일 로드
+        InputStream serviceAccount = getClass()
+                .getClassLoader()
+                .getResourceAsStream("firebase-service-account.json");
+
+        if (serviceAccount == null) {
+            throw new IllegalStateException("firebase-service-account.json 파일을 찾을 수 없습니다.");
+        }
 
         FirebaseOptions options = FirebaseOptions.builder()
                 .setCredentials(GoogleCredentials.fromStream(serviceAccount))
-                .setDatabaseUrl("https://<your-project-id>.firebaseio.com") // Firestore URL 입력
-                .build();
+                .build(); // databaseURL 없이 Firestore만 사용 가능
 
         // Firebase 앱 초기화
         if (FirebaseApp.getApps().isEmpty()) {
@@ -32,4 +36,5 @@ public class FirestoreConfig {
 
         return FirestoreClient.getFirestore();
     }
+
 }

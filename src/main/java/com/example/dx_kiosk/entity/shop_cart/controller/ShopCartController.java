@@ -7,10 +7,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @Slf4j
 @RestController
@@ -20,7 +17,7 @@ public class ShopCartController {
 
     private final ShopCartService shopCartService;
 
-    @PutMapping("/buy")
+    @PostMapping("/buy")
     @Operation(summary = "Buy Items", description = "물품 구매하기")
     public ResponseEntity<Void> buy(@RequestBody ShopCartDTO shopCart) {
         log.info("buy : shopCart = {}", shopCart);
