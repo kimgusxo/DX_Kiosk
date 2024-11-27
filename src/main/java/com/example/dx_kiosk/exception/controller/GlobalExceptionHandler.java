@@ -1,5 +1,6 @@
 package com.example.dx_kiosk.exception.controller;
 
+import com.example.dx_kiosk.exception.FirebaseException;
 import com.example.dx_kiosk.exception.ListEmptyException;
 import com.example.dx_kiosk.exception.ObjectEmptyException;
 import com.example.dx_kiosk.exception.dto.ErrorDTO;
@@ -24,6 +25,11 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(ObjectEmptyException.class)
     protected ResponseEntity<ErrorDTO> objectEmptyExceptionHandler(ObjectEmptyException oe) {
         return new ResponseEntity<>(ErrorDTO.of("객체가 비어있습니다"), HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(FirebaseException.class)
+    protected ResponseEntity<ErrorDTO> firebaseExceptionHandler(Exception e) {
+        return new ResponseEntity<>(ErrorDTO.of("파이어베이스 예외입니다."), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
 }

@@ -3,10 +3,10 @@ package com.example.dx_kiosk.entity.shop_cart.service;
 import com.example.dx_kiosk.entity.shop_cart.domain.ShopCartDTO;
 import com.google.cloud.firestore.Firestore;
 import com.google.cloud.firestore.WriteBatch;
-import com.google.firebase.cloud.FirestoreClient;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -14,72 +14,77 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class ShopCartService {
 
-    public Void buy(ShopCartDTO shopCart) {
-        // Firestore 인스턴스 가져오기
-        Firestore db = FirestoreClient.getFirestore();
+    private final Firestore db;
 
+    public Void buy(ShopCartDTO shopCart) {
         try {
             // 마지막 order_id를 기반으로 새 ID 생성
             int newOrderId = getNextOrderId(db);
 
-            // Order 기본 데이터 준비
+            // Order 데이터 준비
             Map<String, Object> orderData = new HashMap<>();
-            orderData.put("order_id", newOrderId); // order_id 필드 추가
+            orderData.put("order_id", newOrderId);
             orderData.put("user_id", shopCart.getUserId());
             orderData.put("store_id", shopCart.getStoreId());
             orderData.put("space_is_used", shopCart.getSpaceIsUsed());
             orderData.put("order_total_price", shopCart.getTotalPrice());
+            orderData.put("order_time", LocalDateTime.now().toString()); // 주문 시간 추가
 
-            // Firestore Batch 처리 시작
-            WriteBatch batch = db.batch();
-
-            // orders 컬렉션에 order 데이터 저장
-            batch.set(db.collection("orders").document(String.valueOf(newOrderId)), orderData);
-
-            // Meal Kits 하위 컬렉션 저장
+            // Meal Kits 데이터 준비
+            Map<String, Map<String, Object>> mealKitsOrder = new HashMap<>();
             if (shopCart.getMealKitQuantities() != null) {
                 for (Map.Entry<Long, Integer> entry : shopCart.getMealKitQuantities().entrySet()) {
                     Map<String, Object> mealKitData = Map.of(
                             "meal_kit_id", entry.getKey(),
                             "quantity", entry.getValue()
                     );
-                    batch.set(
-                            db.collection("orders").document(String.valueOf(newOrderId))
-                                    .collection("meal_kits").document(String.valueOf(entry.getKey())),
-                            mealKitData
-                    );
+                    mealKitsOrder.put(String.valueOf(entry.getKey()), mealKitData);
                 }
             }
+            orderData.put("meal_kits_order", mealKitsOrder);
 
-            // Laundry Supplies 하위 컬렉션 저장
+            // Laundry Supplies 데이터 준비
+            Map<String, Map<String, Object>> laundrySuppliesOrder = new HashMap<>();
             if (shopCart.getLaundrySuppliesQuantities() != null) {
                 for (Map.Entry<Long, Integer> entry : shopCart.getLaundrySuppliesQuantities().entrySet()) {
                     Map<String, Object> laundrySupplyData = Map.of(
-                            "laundry_supply_id", entry.getKey(),
+                            "laundry_supplies_id", entry.getKey(),
                             "quantity", entry.getValue()
                     );
-                    batch.set(
-                            db.collection("orders").document(String.valueOf(newOrderId))
-                                    .collection("laundry_supplies").document(String.valueOf(entry.getKey())),
-                            laundrySupplyData
-                    );
+                    laundrySuppliesOrder.put(String.valueOf(entry.getKey()), laundrySupplyData);
                 }
             }
+            orderData.put("laundry_supplies_order", laundrySuppliesOrder);
 
-            // Laundry Tickets 하위 컬렉션 저장
-            if (shopCart.getLaundryTicketQuantities() != null) {
-                for (Map.Entry<Long, Boolean> entry : shopCart.getLaundryTicketQuantities().entrySet()) {
+            // Laundry Tickets 데이터 준비
+            Map<String, Map<String, Object>> laundryTicketsUsed = new HashMap<>();
+            if (shopCart.getLaundryTicketUsage() != null) {
+                for (Map.Entry<Long, Boolean> entry : shopCart.getLaundryTicketUsage().entrySet()) {
                     Map<String, Object> laundryTicketData = Map.of(
                             "laundry_ticket_id", entry.getKey(),
                             "is_used", entry.getValue()
                     );
-                    batch.set(
-                            db.collection("orders").document(String.valueOf(newOrderId))
-                                    .collection("laundry_tickets").document(String.valueOf(entry.getKey())),
-                            laundryTicketData
-                    );
+                    laundryTicketsUsed.put(String.valueOf(entry.getKey()), laundryTicketData);
                 }
             }
+            orderData.put("laundry_tickets_used", laundryTicketsUsed);
+
+            // Home Appliances 데이터 준비
+            Map<String, Map<String, Object>> homeAppliancesUsed = new HashMap<>();
+            if (shopCart.getHomeAppliancesUsage() != null) {
+                for (Map.Entry<Long, Boolean> entry : shopCart.getHomeAppliancesUsage().entrySet()) {
+                    Map<String, Object> homeApplianceData = Map.of(
+                            "home_appliances_id", entry.getKey(),
+                            "is_used", entry.getValue()
+                    );
+                    homeAppliancesUsed.put(String.valueOf(entry.getKey()), homeApplianceData);
+                }
+            }
+            orderData.put("home_appliances_used", homeAppliancesUsed);
+
+            // Firestore Batch 처리 시작
+            WriteBatch batch = db.batch();
+            batch.set(db.collection("orders").document(String.valueOf(newOrderId)), orderData);
 
             // Batch 커밋
             batch.commit().get(); // 비동기 작업을 동기적으로 처리

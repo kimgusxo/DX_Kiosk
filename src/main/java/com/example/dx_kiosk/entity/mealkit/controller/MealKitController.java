@@ -27,11 +27,12 @@ public class MealKitController {
         return new ResponseEntity<>(mealKitService.getMealKitList(), HttpStatus.OK);
     }
 
-    @GetMapping("/get/one/{mealKitId}")
+    @GetMapping("/get/one/mealKitId")
     @Operation(summary = "Get MealKitDetailDTO By MealKitId", description = "선택한 밀키트 가져오기")
-    public ResponseEntity<MealKitDetailDTO> getMealKitByMealKitId(@PathVariable Long mealKitId) {
-        log.info("getMealKitByMealKitId : mealKitId = {}", mealKitId);
-        return new ResponseEntity<>(mealKitService.getMealKitByMealKitId(mealKitId), HttpStatus.OK);
+    public ResponseEntity<MealKitDetailDTO> getMealKitByMealKitId(@RequestParam Long mealKitId,
+                                                                  @RequestParam Long storeId) {
+        log.info("getMealKitByMealKitId : mealKitId = {}, storeId = {}", mealKitId, storeId);
+        return new ResponseEntity<>(mealKitService.getMealKitByMealKitId(mealKitId, storeId), HttpStatus.OK);
     }
 
     @GetMapping("/get/list/{mealKitClassification}")

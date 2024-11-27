@@ -18,6 +18,7 @@ public class ShopCartDTO {
 
     private HashMap<Long, Integer> mealKitQuantities;
     private HashMap<Long, Integer> laundrySuppliesQuantities;
-    private HashMap<Long, Boolean> laundryTicketQuantities;
+    private HashMap<Long, Boolean> laundryTicketUsage;
+    private HashMap<Long, Boolean> homeAppliancesUsage;
 
 }

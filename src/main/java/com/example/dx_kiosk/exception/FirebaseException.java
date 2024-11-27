@@ -1,0 +1,4 @@
+package com.example.dx_kiosk.exception;
+
+public class FirebaseException extends RuntimeException {
+}

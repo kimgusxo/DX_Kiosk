@@ -15,9 +15,9 @@ public class UtilsController {
 
     @GetMapping("/data")
     public ResponseEntity<Void> inputData() {
-        dataInputUtils.loadCsvToRedis("C:\\Users\\lenovo\\Desktop\\DX_테이블_데이터\\meal_kit_tb.csv", "meal_kit");
-        dataInputUtils.loadCsvToRedis("C:\\Users\\lenovo\\Desktop\\DX_테이블_데이터\\laundry_supplies_tb.csv", "laundry_supplies");
-        dataInputUtils.loadCsvToRedis("C:\\Users\\lenovo\\Desktop\\DX_테이블_데이터\\laundry_ticket_tb.csv", "laundry_ticket");
+        dataInputUtils.loadCsvToRedis("C:\\Users\\lenovo\\Downloads\\241126_data_csv_utf-8\\241126_data_csv_utf-8\\meal_kit_tb.csv", "meal_kit");
+        dataInputUtils.loadCsvToRedis("C:\\Users\\lenovo\\Downloads\\241126_data_csv_utf-8\\241126_data_csv_utf-8\\laundry_supplies_tb.csv", "laundry_supplies");
+        dataInputUtils.loadCsvToRedis("C:\\Users\\lenovo\\Downloads\\241126_data_csv_utf-8\\241126_data_csv_utf-8\\laundry_ticket_tb.csv", "laundry_ticket");
         return ResponseEntity.ok().build();
     }
 
