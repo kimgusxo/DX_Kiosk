@@ -91,6 +91,7 @@ public class ShopCartService {
             System.out.println("Order saved successfully with order_id: " + newOrderId);
             
             // 이거 커밋이 끝나면 재고 데이터 업데이트 해야함
+            // 그리고 주문이 완료되면 그거에 맞는 current문서 업데이트 해야함
 
         } catch (Exception e) {
             System.err.println("Error saving order: " + e.getMessage());
