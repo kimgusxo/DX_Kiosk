@@ -30,68 +30,63 @@ public class ShopCartService {
             orderData.put("order_total_price", shopCart.getTotalPrice());
             orderData.put("order_time", LocalDateTime.now().toString()); // 주문 시간 추가
 
-            // Meal Kits 데이터 준비
-            Map<String, Map<String, Object>> mealKitsOrder = new HashMap<>();
+            // Firestore Batch 처리 시작
+            WriteBatch batch = db.batch();
+
+            // 상위 문서(주문 데이터) 저장
+            var orderRef = db.collection("orders").document(String.valueOf(newOrderId));
+            batch.set(orderRef, orderData);
+
+            // Meal Kits 하위 컬렉션 저장
             if (shopCart.getMealKitQuantities() != null) {
                 for (Map.Entry<Long, Integer> entry : shopCart.getMealKitQuantities().entrySet()) {
                     Map<String, Object> mealKitData = Map.of(
                             "meal_kit_id", entry.getKey(),
                             "quantity", entry.getValue()
                     );
-                    mealKitsOrder.put(String.valueOf(entry.getKey()), mealKitData);
+                    batch.set(orderRef.collection("meal_kits").document(String.valueOf(entry.getKey())), mealKitData);
                 }
             }
-            orderData.put("meal_kits_order", mealKitsOrder);
 
-            // Laundry Supplies 데이터 준비
-            Map<String, Map<String, Object>> laundrySuppliesOrder = new HashMap<>();
+            // Laundry Supplies 하위 컬렉션 저장
             if (shopCart.getLaundrySuppliesQuantities() != null) {
                 for (Map.Entry<Long, Integer> entry : shopCart.getLaundrySuppliesQuantities().entrySet()) {
                     Map<String, Object> laundrySupplyData = Map.of(
                             "laundry_supplies_id", entry.getKey(),
                             "quantity", entry.getValue()
                     );
-                    laundrySuppliesOrder.put(String.valueOf(entry.getKey()), laundrySupplyData);
+                    batch.set(orderRef.collection("laundry_supplies").document(String.valueOf(entry.getKey())), laundrySupplyData);
                 }
             }
-            orderData.put("laundry_supplies_order", laundrySuppliesOrder);
 
-            // Laundry Tickets 데이터 준비
-            Map<String, Map<String, Object>> laundryTicketsUsed = new HashMap<>();
+            // Laundry Tickets 하위 컬렉션 저장
             if (shopCart.getLaundryTicketUsage() != null) {
                 for (Map.Entry<Long, Boolean> entry : shopCart.getLaundryTicketUsage().entrySet()) {
                     Map<String, Object> laundryTicketData = Map.of(
                             "laundry_ticket_id", entry.getKey(),
                             "is_used", entry.getValue()
                     );
-                    laundryTicketsUsed.put(String.valueOf(entry.getKey()), laundryTicketData);
+                    batch.set(orderRef.collection("laundry_tickets").document(String.valueOf(entry.getKey())), laundryTicketData);
                 }
             }
-            orderData.put("laundry_tickets_used", laundryTicketsUsed);
 
-            // Home Appliances 데이터 준비
-            Map<String, Map<String, Object>> homeAppliancesUsed = new HashMap<>();
+            // Home Appliances 하위 컬렉션 저장
             if (shopCart.getHomeAppliancesUsage() != null) {
                 for (Map.Entry<Long, Boolean> entry : shopCart.getHomeAppliancesUsage().entrySet()) {
                     Map<String, Object> homeApplianceData = Map.of(
                             "home_appliances_id", entry.getKey(),
                             "is_used", entry.getValue()
                     );
-                    homeAppliancesUsed.put(String.valueOf(entry.getKey()), homeApplianceData);
+                    batch.set(orderRef.collection("home_appliances").document(String.valueOf(entry.getKey())), homeApplianceData);
                 }
             }
-            orderData.put("home_appliances_used", homeAppliancesUsed);
-
-            // Firestore Batch 처리 시작
-            WriteBatch batch = db.batch();
-            batch.set(db.collection("orders").document(String.valueOf(newOrderId)), orderData);
 
             // Batch 커밋
             batch.commit().get(); // 비동기 작업을 동기적으로 처리
             System.out.println("Order saved successfully with order_id: " + newOrderId);
-            
-            // 이거 커밋이 끝나면 재고 데이터 업데이트 해야함
-            // 그리고 주문이 완료되면 그거에 맞는 current문서 업데이트 해야함
+
+            // TODO: 커밋 완료 후 재고 데이터 업데이트 로직 추가
+            // TODO: 주문에 맞는 current 문서 업데이트 로직 추가
 
         } catch (Exception e) {
             System.err.println("Error saving order: " + e.getMessage());
