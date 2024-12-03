@@ -69,6 +69,8 @@ public class DataInputUtils {
                                 .laundryTicketPrice(columns[0].trim())
                                 .laundryTicketId(Long.parseLong(columns[1].trim()))
                                 .laundryTicketClassification(columns[2].trim())
+                                .laundryTicketName(columns[3].trim())
+                                .laundryTicketUrl(columns[4].trim())
                                 .build();
                         laundryTicketRepository.save(laundryTicket);
                         break;

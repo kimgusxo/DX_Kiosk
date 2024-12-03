@@ -65,18 +65,24 @@ public class LaundrySuppliesService {
                 throw new ObjectEmptyException();
             }
 
-            // store_id에 해당하는 첫 번째 문서 가져오기
-            var documentSnapshot = querySnapshot.getDocuments().get(0);
+            // 첫 번째 문서 ID 추출
+            String documentId = querySnapshot.getDocuments().get(0).getId();
 
-            // 중첩 필드 laundry_supplies_count에서 laundry_supplies_id로 데이터 조회
-            Map<String, Object> laundrySuppliesCount = (Map<String, Object>) documentSnapshot.get("laundry_supplies_count");
-            if (laundrySuppliesCount == null || !laundrySuppliesCount.containsKey(laundrySuppliesId.toString())) {
+            // 하위 컬렉션 meal_kits_count 접근
+            var laundrySuppliesCollection = db.collection("stores_laundry_supplies_count")
+                    .document(documentId)
+                    .collection("laundry_supplies_count")
+                    .whereEqualTo("laundry_supplies_id", laundrySuppliesId)
+                    .get()
+                    .get();
+
+            if (laundrySuppliesCollection.isEmpty()) {
                 throw new ObjectEmptyException();
             }
 
-            // 하위 데이터에서 재고(count) 필드 추출
-            Map<String, Object> specificSupply = (Map<String, Object>) laundrySuppliesCount.get(laundrySuppliesId.toString());
-            Integer count = (Integer) specificSupply.get("laundry_supplies_count");
+            // 첫 번째 하위 컬렉션 데이터 가져오기
+            var laundrySuppliesSnapshot = laundrySuppliesCollection.getDocuments().get(0);
+            Integer count = ((Number) laundrySuppliesSnapshot.get("laundry_supplies_count")).intValue();
 
             // DTO 생성 및 반환
             return new LaundrySuppliesDetailDTO(

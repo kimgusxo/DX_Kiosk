@@ -14,7 +14,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -64,18 +63,24 @@ public class MealKitService {
                 throw new ObjectEmptyException();
             }
 
-            // store_id에 해당하는 첫 번째 문서 가져오기
-            var documentSnapshot = querySnapshot.getDocuments().get(0);
+            // 첫 번째 문서 ID 추출
+            String documentId = querySnapshot.getDocuments().get(0).getId();
 
-            // 중첩 필드 laundry_supplies_count에서 laundry_supplies_id로 데이터 조회
-            Map<String, Object> mealKitCount = (Map<String, Object>) documentSnapshot.get("meal_kit_count");
-            if (mealKitCount == null || !mealKitCount.containsKey(mealKitId.toString())) {
+            // 하위 컬렉션 meal_kits_count 접근
+            var mealKitCollection = db.collection("stores_meal_kits_count")
+                    .document(documentId)
+                    .collection("meal_kits_count")
+                    .whereEqualTo("meal_kit_id", mealKitId)
+                    .get()
+                    .get();
+
+            if (mealKitCollection.isEmpty()) {
                 throw new ObjectEmptyException();
             }
 
-            // 하위 데이터에서 재고(count) 필드 추출
-            Map<String, Object> specificSupply = (Map<String, Object>) mealKitCount.get(mealKitId.toString());
-            Integer count = (Integer) specificSupply.get("meal_kit_count");
+            // 첫 번째 하위 컬렉션 데이터 가져오기
+            var mealKitSnapshot = mealKitCollection.getDocuments().get(0);
+            Integer count = ((Number) mealKitSnapshot.get("meal_kit_count")).intValue();
 
             // DTO 생성 및 반환
             return new MealKitDetailDTO(

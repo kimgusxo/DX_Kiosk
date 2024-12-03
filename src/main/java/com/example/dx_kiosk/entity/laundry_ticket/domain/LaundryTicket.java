@@ -15,7 +15,9 @@ public class LaundryTicket {
     @Id
     private Long laundryTicketId;
 
+    private String laundryTicketName;
     private String laundryTicketClassification;
     private String laundryTicketPrice;
+    private String laundryTicketUrl;
 
 }
