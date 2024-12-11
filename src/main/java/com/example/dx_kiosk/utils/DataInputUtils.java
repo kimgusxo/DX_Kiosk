@@ -66,7 +66,7 @@ public class DataInputUtils {
                     case "laundry_ticket":
                         // Column order: laundry_ticket_price, laundry_ticket_id, laundry_ticket_classification
                         LaundryTicket laundryTicket = LaundryTicket.builder()
-                                .laundryTicketPrice(columns[0].trim())
+                                .laundryTicketPrice(Integer.parseInt(columns[0].trim()))
                                 .laundryTicketId(Long.parseLong(columns[1].trim()))
                                 .laundryTicketClassification(columns[2].trim())
                                 .laundryTicketName(columns[3].trim())

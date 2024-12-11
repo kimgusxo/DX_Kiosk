@@ -17,7 +17,7 @@ public class LaundryTicket {
 
     private String laundryTicketName;
     private String laundryTicketClassification;
-    private String laundryTicketPrice;
+    private Integer laundryTicketPrice;
     private String laundryTicketUrl;
 
 }

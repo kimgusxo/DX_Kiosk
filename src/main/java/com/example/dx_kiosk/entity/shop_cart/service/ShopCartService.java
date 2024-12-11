@@ -124,7 +124,7 @@ public class ShopCartService {
                 for (Map.Entry<Long, Integer> entry : shopCart.getMealKitQuantities().entrySet()) {
                     DocumentReference docRef = db.collection("stores_meal_kits_count")
                             .document(String.valueOf(shopCart.getStoreId()))
-                            .collection("meal_kits")
+                            .collection("meal_kits_count")
                             .document(String.valueOf(entry.getKey()));
                     DocumentSnapshot snapshot = transaction.get(docRef).get();
                     int currentCount = snapshot.getLong("meal_kit_count").intValue();
@@ -137,7 +137,7 @@ public class ShopCartService {
                 for (Map.Entry<Long, Integer> entry : shopCart.getLaundrySuppliesQuantities().entrySet()) {
                     DocumentReference docRef = db.collection("stores_laundry_supplies_count")
                             .document(String.valueOf(shopCart.getStoreId()))
-                            .collection("laundry_supplies")
+                            .collection("laundry_supplies_count")
                             .document(String.valueOf(entry.getKey()));
                     DocumentSnapshot snapshot = transaction.get(docRef).get();
                     int currentCount = snapshot.getLong("laundry_supplies_count").intValue();

@@ -6,7 +6,7 @@ public record LaundryTicketDTO(
         Long laundryTicketId,
         String laundryTicketName,
         String laundryTicketClassification,
-        String laundryTicketPrice,
+        Integer laundryTicketPrice,
         String laundryTicketUrl
 
 ) {
